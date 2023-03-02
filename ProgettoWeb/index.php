@@ -83,14 +83,13 @@ and open the template in the editor.
                 $risultato = mysqli_query($connetti, $query);
                 if (mysqli_num_rows($risultato) != 0) {
                     echo "benvenuto";
-                    
-                    $queryNuova="SELECT * FROM persona WHERE email='$dati[email]' AND passwordP='$dati[password]'";
-                    $risultato2=mysqli_query($connetti, $queryNuova);
-                    $results=mysqli_fetch_row($risultato2);
+
+                    $queryNuova = "SELECT * FROM persona WHERE email='$dati[email]' AND passwordP='$dati[password]'";
+                    $risultato2 = mysqli_query($connetti, $queryNuova);
+                    $results = mysqli_fetch_row($risultato2);
                     print_r($results);
-                    
                     ?>
-                    
+
                     <form id="autoform" action="areaPersonale.php" method="POST">
                         <input type="text" hidden="true" name="nome" value="<?php echo $results[1]; ?>">
                         <input type="text" hidden="true" name="cognome" value="<?php echo $results[2]; ?>">
@@ -110,7 +109,7 @@ and open the template in the editor.
                 } else {
                     ?> 
                     <script>
-                            document.getElementById("nonLoggato").hidden = false;
+                        document.getElementById("nonLoggato").hidden = false;
                     </script>
                     <?php
                 }
@@ -125,18 +124,19 @@ and open the template in the editor.
         }
 
         function checkPassword($input) {
-            global $dati;
-            $file = fopen("hashes.txt", "r") or die("impossibile aprire il file");
+            global $dati, $connetti;
+
             $hashToCompare = hash('ripemd160', $input);
             $hashToCompare = substr($hashToCompare, 0, 30);
-            echo $hashToCompare;
-            while (!feof($file)) {
-                if (strcmp(fgets($file), $hashToCompare)) {
-                    $dati["password"] = $hashToCompare;
-                    return true;
+            $queryPassword = "SELECT * FROM persona WHERE passwordP='$hashToCompare'";
+            $risultato = mysqli_query($connetti, $queryPassword);
+            if (mysqli_num_rows($risultato) != 0) {
+                $dati["password"] = $hashToCompare;
+                return true;
+            } else { {
+                    return false;
                 }
             }
-            return false;
         }
 
         function controllaInput($input) {

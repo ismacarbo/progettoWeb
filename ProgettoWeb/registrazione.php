@@ -177,9 +177,7 @@ and open the template in the editor.
                 </script>
                 <?php
             } else {
-                $file = fopen("hashes.txt", "a") or die("impossibile aprire il file");
-                fwrite($file, $hash . "\n");
-                fclose($file);
+               
 
                 $query = "INSERT INTO persona(nome,cognome,codiceFiscale,numeroTelefono,indirizzo,dataNascita,email,passwordP,idComune)"
                         . "VALUES('$persona[nome]','$persona[cognome]','$persona[codiceFiscale]','$persona[numeroTelefono]','$persona[indirizzo]','$persona[dataNascita]','$persona[email]','$persona[password]','1')";
