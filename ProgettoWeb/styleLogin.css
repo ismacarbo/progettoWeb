@@ -1,0 +1,15 @@
+.gradient-custom {
+/* fallback for old browsers */
+
+
+/* Chrome 10-25, Safari 5.1-6 */
+background: #01140d;
+
+    }
+
+
+.card {
+        margin: 0 auto; /* Added */
+        float: none; /* Added */
+        margin-bottom: 10px; /* Added */
+}
