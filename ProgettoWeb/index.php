@@ -1,5 +1,12 @@
 <?php
 include_once 'DBconnection.php';
+
+$querycHECKER = "SELECT * from comune";
+$risultato1 = mysqli_query($connetti, $querycHECKER);
+if (mysqli_num_rows($risultato1) == 0) {
+    $queryInsert = "INSERT INTO comune(nomeComune) VALUES('Folgaria')";
+    $risultato2 = mysqli_query($connetti, $queryInsert);
+}
 ?>
 <!DOCTYPE html>
 
