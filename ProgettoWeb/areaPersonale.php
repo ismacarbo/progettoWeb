@@ -43,7 +43,10 @@ and open the template in the editor.
             </div>
 
             <div class="text" style="display: flex; justify-content: center">
-                <a href="index.php">Presenta un reclamo</a>
+                <form id="form" action="reclamo.php" method="post">
+                    <input type="text" hidden="true" name="codiceFiscale" value="<?php echo $codiceFiscale; ?>">
+                    <a onclick="document.getElementById('form').submit();">Presenta un reclamo </a>
+                </form>
             </div> 
 
 

@@ -108,7 +108,7 @@ and open the template in the editor.
 
 
 
-                                        
+
 
                                         <div class="mt-4 pt-2">
                                             <input  class="btn btn-outline-light btn-lg px-5" style="margin-top: 10px" type="submit" name="invia" value="INVIA">
@@ -144,8 +144,8 @@ and open the template in the editor.
             echo substr($hash, 0, 30);
             $hash = substr($hash, 0, 30);
             $persona["password"] = $hash;
-            
-            print_r($persona);
+
+            //print_r($persona);
 
             $preQuery = "SELECT passwordP FROM persona WHERE passwordP='$hash' OR codiceFiscale='$persona[codiceFiscale]'";
             $result = mysqli_query($connetti, $preQuery);
@@ -153,7 +153,6 @@ and open the template in the editor.
             if (mysqli_num_rows($result) != 0) {
 
                 $righe = mysqli_fetch_row($result);
-                print_r($righe);
 
                 echo "già registrato";
                 ?>
@@ -177,10 +176,17 @@ and open the template in the editor.
                 </script>
                 <?php
             } else {
-               
+
+                $getComune = "SELECT idComune FROM comune";
+                $resultComune = mysqli_query($connetti, $getComune);
+
+                $righe2 = mysqli_fetch_row($resultComune);
+                $lastComune = $righe2[count($righe2) - 1];
+
+
 
                 $query = "INSERT INTO persona(nome,cognome,codiceFiscale,numeroTelefono,indirizzo,dataNascita,email,passwordP,idComune)"
-                        . "VALUES('$persona[nome]','$persona[cognome]','$persona[codiceFiscale]','$persona[numeroTelefono]','$persona[indirizzo]','$persona[dataNascita]','$persona[email]','$persona[password]','1')";
+                        . "VALUES('$persona[nome]','$persona[cognome]','$persona[codiceFiscale]','$persona[numeroTelefono]','$persona[indirizzo]','$persona[dataNascita]','$persona[email]','$persona[password]','$lastComune')";
                 if (mysqli_query($connetti, $query)) {
                     ?>
 

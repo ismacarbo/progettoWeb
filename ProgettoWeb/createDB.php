@@ -1,6 +1,7 @@
 <?php
+include_once 'DBconnection.php';
 
-$queryDB = "DROP DATABASE IF EXISTS centroReclami;
+$queryDB = "
 
 CREATE DATABASE IF NOT EXISTS centroReclami DEFAULT CHARACTER SET = utf8;
 

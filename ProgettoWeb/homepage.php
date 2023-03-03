@@ -1,3 +1,13 @@
+<?php
+include_once 'DBconnection.php';
+
+if (!isset($_SESSION["primo_run"])) {
+    $_SESSION["primo_run"] = 1;
+    include 'createDB';
+}
+?>
+
+
 <!DOCTYPE html>
 
 <html>
@@ -5,7 +15,7 @@
         <title>HomePage </title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        
+
 
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
@@ -14,7 +24,7 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
         <link rel="stylesheet" href="pr.css">
-        
+
 
     </head>
     <body>
@@ -28,7 +38,7 @@
                 <h2>Alpe Cimbra</h2> 
                 <h3>Centro reclami e consigli</h3>
                 <p>Benvenuto sul sito del centro reclami di Folgaria, qui potrai effettuare richieste di costruzione e ristturazioni ambientali semplicemente accedendo 
-                all'area personale. Migliora te stesso e l'ambiente in cui vivi.</p>
+                    all'area personale. Migliora te stesso e l'ambiente in cui vivi.</p>
                 <a href="index.php">Accedi</a>
             </div>
             <ul class="social">
