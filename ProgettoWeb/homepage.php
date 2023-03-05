@@ -50,7 +50,7 @@ if (!isset($_SESSION["primo_run"])) {
         <div class="menu">
             <ul>
                 <li><a href="#">Home</a></li>
-                <li><a href="#">News</a></li>
+                <li><a href="news.php">News</a></li>
                 <li><a href="index.php">Area Personale</a></li>
             </ul>
         </div>

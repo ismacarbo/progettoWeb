@@ -15,7 +15,7 @@ and open the template in the editor.
 
 
     </head>
-    <body>
+    <body style="background-color: #01140d">
 
 
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -23,7 +23,7 @@ and open the template in the editor.
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-        <link rel="stylesheet" href="reclamo.css">
+        <link rel="stylesheet" href="pr.css">
 
         <?php if (!isset($_POST["invia"])) { ?>
             <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST">
@@ -80,7 +80,7 @@ and open the template in the editor.
 
             <?php
             $persona = array("nome" => "", "cognome" => "", "codiceFiscale" => "", "numeroTelefono" => "", "indirizzo" => "", "dataNascita" => "", "email" => "", "password" => "");
-            $problema = array("descrizioneProblema" => "", "idComune" => "", "tipo" => "");
+            $problema = array("descrizioneProblema" => "", "idComune" => "", "tipo" => "", "indirizzoProblema" => "");
         } else {
             if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["invia"])) {
                 $problema["descrizioneProblema"] = controllaInput($_POST["descrizione"]);
@@ -90,14 +90,28 @@ and open the template in the editor.
                 $lastComune = $righe2[count($righe2) - 1];
                 $problema["idComune"] = controllaInput($lastComune);
                 $problema["tipo"] = controllaInput($_POST["tipo"]);
+                $problema["indirizzoProblema"] = controllaInput($_POST["indirizzoProblema"]);
 
-                $queryInserimento = "INSERT INTO problema(descrizioneProblema,idComune,tipo) VALUES('$problema[descrizioneProblema]'"
-                        . ",'$problema[idComune]','$problema[tipo]')";
+                $queryInserimento = "INSERT INTO problema(descrizioneProblema,idComune,tipo,indirizzoProblema) VALUES('$problema[descrizioneProblema]'"
+                        . ",'$problema[idComune]','$problema[tipo]','$problema[indirizzoProblema]')";
 
                 if (mysqli_query($connetti, $queryInserimento)) {
-                    echo "inserito reclamo";
-                } else {
-                    echo "no bro";
+                    ?>
+                    <div class="card mx-auto shadow-lg p-3 mb-5 bg-white rounded" style="width:400px; margin-top: 100px">
+                        <iframe width="100%" height="500" src="https://maps.google.com/maps?q=<?php echo $problema["indirizzoProblema"]; ?>&output=embed"></iframe>
+                        <div class="card-body">
+                            <h4 class="card-title">Reclamo inserito!</h4>
+                            <p class="card-text">Puoi visualizzarlo nella bacheca delle news cliccando qui sotto ↓</p>
+                        </div>
+                    </div>
+
+                    <div class="text" style="display: flex; justify-content: center">
+                        <form id="form" action="news.php" method="post">
+                            <a onclick="document.getElementById('form').submit();">Bacheca delle news</a>
+                        </form>
+                    </div> 
+
+                    <?php
                 }
             }
         }
