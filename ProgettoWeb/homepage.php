@@ -2,8 +2,11 @@
 include_once 'DBconnection.php';
 
 if (!isset($_SESSION["primo_run"])) {
-    $_SESSION["primo_run"] = 1;
-    include 'createDB';
+    $inserisci="INSERTO INTO Comune(nomeComune) VALUES('Folgaria')";
+    $result1= mysqli_query($connetti, $inserisci);
+    if($result1){
+        $_SESSION["primo_run"]=1;
+    }
 }
 ?>
 

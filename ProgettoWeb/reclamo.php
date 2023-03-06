@@ -25,7 +25,12 @@ and open the template in the editor.
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="pr.css">
 
-        <?php if (!isset($_POST["invia"])) { ?>
+        <?php
+        $persona = array("nome" => "", "cognome" => "", "codiceFiscale" => "", "numeroTelefono" => "", "indirizzo" => "", "dataNascita" => "", "email" => "", "password" => "");
+        $problema = array("descrizioneProblema" => "", "idComune" => "", "tipo" => "", "indirizzoProblema" => "");
+
+        if (!isset($_POST["invia"])) {
+            ?>
             <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST">
                 <section class="vh-100 gradient-custom">
                     <div class="row d-flex justify-content-center align-items-center h-100">
@@ -46,7 +51,7 @@ and open the template in the editor.
 
                                         <div class="form-outline">
                                             <input type="text" id="indirizzoProblema" name="indirizzoProblema" id="indirizzoProblema" class="form-control form-control-lg" required="">
-                                            <label class="form-label" for="indirizzoProblema" >Indirizzo Problema</label>
+                                            <label class="form-label" for="indirizzoProblema" >Indirizzo/via del Problema</label>
                                         </div>
 
                                         <br>
@@ -79,8 +84,6 @@ and open the template in the editor.
 
 
             <?php
-            $persona = array("nome" => "", "cognome" => "", "codiceFiscale" => "", "numeroTelefono" => "", "indirizzo" => "", "dataNascita" => "", "email" => "", "password" => "");
-            $problema = array("descrizioneProblema" => "", "idComune" => "", "tipo" => "", "indirizzoProblema" => "");
         } else {
             if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["invia"])) {
                 $problema["descrizioneProblema"] = controllaInput($_POST["descrizione"]);
@@ -91,9 +94,11 @@ and open the template in the editor.
                 $problema["idComune"] = controllaInput($lastComune);
                 $problema["tipo"] = controllaInput($_POST["tipo"]);
                 $problema["indirizzoProblema"] = controllaInput($_POST["indirizzoProblema"]);
+                $t = time();
+                $date = date("Y-m-d", $t);
 
-                $queryInserimento = "INSERT INTO problema(descrizioneProblema,idComune,tipo,indirizzoProblema) VALUES('$problema[descrizioneProblema]'"
-                        . ",'$problema[idComune]','$problema[tipo]','$problema[indirizzoProblema]')";
+                $queryInserimento = "INSERT INTO problema(descrizioneProblema,idComune,tipo,indirizzoProblema,dataReclamo) VALUES('$problema[descrizioneProblema]'"
+                        . ",'$problema[idComune]','$problema[tipo]','$problema[indirizzoProblema]','$date')";
 
                 if (mysqli_query($connetti, $queryInserimento)) {
                     ?>
@@ -113,30 +118,29 @@ and open the template in the editor.
 
                     <?php
                 }
+            } else {
+                if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["codiceFiscale"])) {
+                    echo $_POST["codiceFiscale"];
+
+                    $preQuery = "SELECT * FROM persona WHERE codiceFiscale='$_POST[codiceFiscale]'";
+                    $result = mysqli_query($connetti, $preQuery);
+
+                    if (mysqli_num_rows($result) != 0) {
+                        $results = mysqli_fetch_row($result);
+                        $persona["nome"] = $results[1];
+                        $persona["cognome"] = $results[2];
+                        $persona["codiceFiscale"] = $results[3];
+                        $persona["numeroTelefono"] = $results[4];
+                        $persona["indirizzo"] = $results[5];
+                        $persona["dataNascita"] = $results[7];
+                        $persona["email"] = $results[8];
+                        $persona["password"] = $results[9];
+                    }
+
+
+                    print_r($persona);
+                }
             }
-        }
-
-
-        if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["codiceFiscale"])) {
-            echo $_POST["codiceFiscale"];
-
-            $preQuery = "SELECT * FROM persona WHERE codiceFiscale='$_POST[codiceFiscale]'";
-            $result = mysqli_query($connetti, $preQuery);
-
-            if (mysqli_num_rows($result) != 0) {
-                $results = mysqli_fetch_row($result);
-                $persona["nome"] = $results[1];
-                $persona["cognome"] = $results[2];
-                $persona["codiceFiscale"] = $results[3];
-                $persona["numeroTelefono"] = $results[4];
-                $persona["indirizzo"] = $results[5];
-                $persona["dataNascita"] = $results[7];
-                $persona["email"] = $results[8];
-                $persona["password"] = $results[9];
-            }
-
-
-            print_r($persona);
         }
 
         function controllaInput($input) {
