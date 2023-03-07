@@ -95,6 +95,27 @@ and open the template in the editor.
                     $risultato2 = mysqli_query($connetti, $queryNuova);
                     $results = mysqli_fetch_row($risultato2);
                     print_r($results);
+
+                    if ($results[6] == 1) { //sei un dipendente
+                        ?>
+                        <form id="autoform" action="newsDipendente.php" method="POST">
+                            <input type="text" hidden="true" name="nome" value="<?php echo $results[1]; ?>">
+                            <input type="text" hidden="true" name="cognome" value="<?php echo $results[2]; ?>">
+                            <input type="text" hidden="true" name="codiceFiscale" value="<?php echo $results[3]; ?>">
+                        </form>
+                        <script type="text/javascript">
+
+
+                            function formAutoSubmit() {
+                                var frm = document.getElementById("autoform");
+                                frm.submit();
+                            }
+
+                            formAutoSubmit();
+                        </script>
+
+                        <?php
+                    }
                     ?>
 
                     <form id="autoform" action="areaPersonale.php" method="POST">

@@ -25,13 +25,22 @@ include_once 'DBconnection.php';
         if (!isset($_POST["ricerca"])) {
 
 
-            $queryGetReclami = "SELECT descrizioneProblema,indirizzoProblema,dataReclamo from problema";
+            $queryGetReclami = "SELECT descrizioneProblema,indirizzoProblema,dataReclamo,stato from problema";
             $risultato = mysqli_query($connetti, $queryGetReclami);
             if (mysqli_num_rows($risultato) != 0) {
                 $righe = mysqli_fetch_all($risultato);
                 ?>
 
-                <section class="dark">
+
+
+
+                <section class="dark" style="padding-bottom: 700px">
+                    <section class="showcase">
+                        <header>
+                            <h2 class="logo"> <a href="homepage.php">Torna alla home</a> </h2>
+                            <div class="toggle" accesskey=""></div>
+                        </header>
+                    </section>
                     <div class="container py-4">
                         <h1 class="h1 text-center" id="pageHeaderTitle" style="color: white">BACHECA DELLE NEWS</h1>
                         <div class="col-md-15 mb-4 pb-2">
@@ -49,13 +58,14 @@ include_once 'DBconnection.php';
                         </div>
 
                         <?php
-                        $dati = array("descrizione" => "", "indirizzo" => "", "data" => "");
+                        $dati = array("descrizione" => "", "indirizzo" => "", "data" => "", "stato" => "");
                         for ($i = 0; $i < count($righe); $i++) {
                             for ($j = 0; $j < count($righe[$i]); $j++) {
                                 $dati["descrizione"] = $righe[$i][0];
                                 $dati["indirizzo"] = $righe[$i][1];
                             }
                             $dati["data"] = date("D M y", strtotime($righe[$i][2]));
+                            $dati["stato"] = $righe[$i][3];
                             ?>
                             <article class="postcard dark <?php echo $colors[rand(0, count($colors) - 1)]; ?>">
                                 <a class="postcard__img_link" href="#"> 
@@ -69,6 +79,14 @@ include_once 'DBconnection.php';
                                             $date = explode("/", $dati["data"]);
                                             echo $date[0];
                                             ?></i>
+                                        <i class="fas fa-calendar-alt mr-2">Stato: <?php
+                                            if ($dati["stato"] == "0") {
+                                                echo "in corso";
+                                            } else {
+                                                echo "Problema risolto";
+                                            }
+                                            ?></i>
+
 
                                     </div>
                                     <div class="postcard__bar"></div>
@@ -144,6 +162,28 @@ include_once 'DBconnection.php';
                                 <?php
                             }
                             ?>
+                        </div>
+                    </section>
+                    <?php
+                } else {
+                    ?>
+                    <section class="dark" style="padding-bottom: 700px">
+                        <div class="container py-4">
+                            <h1 class="h1 text-center" id="pageHeaderTitle" style="color: white">BACHECA DELLE NEWS</h1>
+                            <div class="col-md-15 mb-4 pb-2">
+                                <div class="container h-100">
+                                    <div class="d-flex justify-content-center h-100">
+                                        <form id="form" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST">
+                                            <div class="searchbar">
+                                                <input class="search_input" type="text" name="ricerca" placeholder="Cerca...">
+                                                <a onclick="document.getElementById('form').submit();" class="search_icon"><img style="height: 80px; width: 80px" src="foto/logo.png"/><i class="fas fa-search"></i></a>
+                                            </div> 
+                                        </form>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <h1 class="h1 text-center" id="pageHeaderTitle" style="color: white">Non è stato trovato nessun reclamo, effettua nuovamente la ricerca!</h1>
                         </div>
                     </section>
                     <?php

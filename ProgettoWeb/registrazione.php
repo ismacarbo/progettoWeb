@@ -107,7 +107,12 @@ and open the template in the editor.
                                         </div>
 
 
-
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="dipendente" value="" id="flexCheckIndeterminate">
+                                            <label class="form-check-label" for="flexCheckIndeterminate">
+                                                Dipendente
+                                            </label>
+                                        </div>
 
 
                                         <div class="mt-4 pt-2">
@@ -126,7 +131,7 @@ and open the template in the editor.
             <?php
         }
 
-        $persona = array("nome" => "", "cognome" => "", "dataNascita" => "", "indirizzo" => "", "email" => "", "codiceFiscale" => "", "password" => "", "numeroTelefono" => "");
+        $persona = array("nome" => "", "cognome" => "", "dataNascita" => "", "indirizzo" => "", "email" => "", "codiceFiscale" => "", "password" => "", "numeroTelefono" => "", "tipo" => "");
 
         if ($_SERVER["REQUEST_METHOD"] && isset($_POST["invia"])) {
             $persona["nome"] = ucwords(strtolower(controllaInput($_POST["nome"])));
@@ -137,6 +142,7 @@ and open the template in the editor.
             $timestamp = strtotime($tempNascita);
             $tempNascita = date("Y-m-d", $timestamp);
             $persona["dataNascita"] = $tempNascita;
+            $persona["tipo"] = isset($_POST["dipendente"]);
             $persona["indirizzo"] = controllaInput($_POST["indirizzo"]);
             $persona["email"] = controllaInput($_POST["email"]);
             $persona["codiceFiscale"] = trim(strtoupper($_POST["codiceFiscale"]));
@@ -145,7 +151,7 @@ and open the template in the editor.
             $hash = substr($hash, 0, 30);
             $persona["password"] = $hash;
 
-            //print_r($persona);
+            print_r($persona);
 
             $preQuery = "SELECT passwordP FROM persona WHERE passwordP='$hash' OR codiceFiscale='$persona[codiceFiscale]'";
             $result = mysqli_query($connetti, $preQuery);
@@ -162,6 +168,7 @@ and open the template in the editor.
                     <input type="text" hidden="true" name="nome" value="<?php echo $persona["nome"]; ?>">
                     <input type="text" hidden="true" name="cognome" value="<?php echo $persona["cognome"]; ?>">
                     <input type="text" hidden="true" name="codiceFiscale" value="<?php echo $persona["codiceFiscale"]; ?>">
+                    
                 </form>
 
 
@@ -185,8 +192,9 @@ and open the template in the editor.
 
 
 
-                $query = "INSERT INTO persona(nome,cognome,codiceFiscale,numeroTelefono,indirizzo,dataNascita,email,passwordP,idComune)"
-                        . "VALUES('$persona[nome]','$persona[cognome]','$persona[codiceFiscale]','$persona[numeroTelefono]','$persona[indirizzo]','$persona[dataNascita]','$persona[email]','$persona[password]','$lastComune')";
+
+                $query = "INSERT INTO persona(nome,cognome,codiceFiscale,numeroTelefono,indirizzo,dataNascita,email,passwordP,idComune,tipo)"
+                        . "VALUES('$persona[nome]','$persona[cognome]','$persona[codiceFiscale]','$persona[numeroTelefono]','$persona[indirizzo]','$persona[dataNascita]','$persona[email]','$persona[password]','$lastComune','$persona[tipo]')";
                 if (mysqli_query($connetti, $query)) {
                     ?>
 

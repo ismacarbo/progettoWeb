@@ -97,8 +97,8 @@ and open the template in the editor.
                 $t = time();
                 $date = date("Y-m-d", $t);
 
-                $queryInserimento = "INSERT INTO problema(descrizioneProblema,idComune,tipo,indirizzoProblema,dataReclamo) VALUES('$problema[descrizioneProblema]'"
-                        . ",'$problema[idComune]','$problema[tipo]','$problema[indirizzoProblema]','$date')";
+                $queryInserimento = "INSERT INTO problema(descrizioneProblema,idComune,tipo,indirizzoProblema,dataReclamo,stato) VALUES('$problema[descrizioneProblema]'"
+                        . ",'$problema[idComune]','$problema[tipo]','$problema[indirizzoProblema]','$date','0')";
 
                 if (mysqli_query($connetti, $queryInserimento)) {
                     ?>
