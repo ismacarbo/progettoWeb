@@ -35,12 +35,7 @@ include_once 'DBconnection.php';
 
 
                 <section class="dark" style="padding-bottom: 700px">
-                    <section>
-                        <header style="margin-left: 100px; margin-top: 10px" >
-                            <h2> <a  href="homepage.php">Torna alla home</a> </h2>
-                            
-                        </header>
-                    </section>
+                    <div style="margin-left: 50px; padding-top: 30px; width: 200px; height: 20px; font-size: 25px" class="btn btn-link"> <a  href="index.php">Torna alla home</a> </div>
                     <div class="container py-4">
                         <h1 class="h1 text-center" id="pageHeaderTitle" style="color: white">BACHECA DELLE NEWS</h1>
                         <div class="col-md-15 mb-4 pb-2">
