@@ -35,10 +35,10 @@ include_once 'DBconnection.php';
 
 
                 <section class="dark" style="padding-bottom: 700px">
-                    <section class="showcase">
-                        <header>
-                            <h2 class="logo"> <a href="homepage.php">Torna alla home</a> </h2>
-                            <div class="toggle" accesskey=""></div>
+                    <section>
+                        <header style="margin-left: 100px; margin-top: 10px" >
+                            <h2> <a  href="homepage.php">Torna alla home</a> </h2>
+                            
                         </header>
                     </section>
                     <div class="container py-4">

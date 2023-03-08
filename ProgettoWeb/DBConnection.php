@@ -1,4 +1,5 @@
 <?php
+
 $nomeServer="localhost";
 $userName="root";
 $passwordDB="";

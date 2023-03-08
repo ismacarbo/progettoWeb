@@ -44,10 +44,10 @@ and open the template in the editor.
                 $persona["password"] = $results[9];
             }
 
-            
-            $queryGetReclami = "SELECT idProblema,descrizioneProblema,indirizzoProblema,dataReclamo,stato from problema";
+
+            $queryGetReclami = "SELECT idProblema,descrizioneProblema,indirizzoProblema,dataReclamo,stato from problema WHERE stato='0'";
             $risultato = mysqli_query($connetti, $queryGetReclami);
-            $dati = array("descrizione" => "", "indirizzo" => "", "data" => "", "stato" => "","idProblema"=>"");
+            $dati = array("descrizione" => "", "indirizzo" => "", "data" => "", "stato" => "", "idProblema" => "");
             if (mysqli_num_rows($risultato) != 0) {
                 $righe = mysqli_fetch_all($risultato);
                 ?>
@@ -95,11 +95,11 @@ and open the template in the editor.
 
                                         <i class="fas fa-calendar-alt mr-2"><div class="form-check">
                                                 <form id="autoform" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST">
-                                                    <input class="form-check-input" type="checkbox" onchange="this.form.submit()" name="completato" value="<?php echo $dati["idProblma"]; ?>" id="flexCheckIndeterminate">
+                                                    <input class="form-check-input" type="checkbox"  id="flexCheckIndeterminate" onchange="this.form.submit()" name="completato" value="<?php echo $dati["idProblema"]; ?>">
                                                     <label class="form-check-label" for="flexCheckIndeterminate">
                                                         Lavoro completato
                                                     </label>
-                                                    
+
                                                 </form>
                                             </div>
 
@@ -119,9 +119,115 @@ and open the template in the editor.
                 <?php
             }
         }
-        
-        if($_SERVER["REQUEST_METHOD"]&&isset($_POST["completato"])){
-            echo "completato";
+
+        if ($_SERVER["REQUEST_METHOD"] && isset($_POST["completato"])) {
+
+            $queryUPDATE = "UPDATE problema SET stato='1' WHERE idProblema='$_POST[completato]'";
+            $risultato = mysqli_query($connetti, $queryUPDATE);
+            if ($risultato) {
+
+
+                $queryGetReclami = "SELECT idProblema,descrizioneProblema,indirizzoProblema,dataReclamo,stato from problema WHERE stato='0'";
+                $risultato1 = mysqli_query($connetti, $queryGetReclami);
+                $dati2 = array("descrizione" => "", "indirizzo" => "", "data" => "", "stato" => "", "idProblema" => "");
+                if ($risultato1) {
+                    $righe2 = mysqli_fetch_all($risultato1, MYSQLI_ASSOC);
+                    if (count($righe2) > 0) {
+                        ?>
+
+                        <section class="dark" style="padding-bottom: 700px">
+                            <div class="container py-4">
+                                <h1 class="h1 text-center" id="pageHeaderTitle" style="color: white">BACHECA DELLE NEWS</h1>
+                                <div class="col-md-15 mb-4 pb-2">
+                                    <div class="container h-100">
+                                        <div class="d-flex justify-content-center h-100">
+                                            <form id="form" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST">
+                                                <div class="searchbar">
+                                                    <input class="search_input" type="text" name="ricerca" placeholder="Cerca...">
+                                                    <a onclick="document.getElementById('form').submit();" class="search_icon"><img style="height: 80px; width: 80px" src="foto/logo.png"/><i class="fas fa-search"></i></a>
+                                                </div> 
+                                            </form>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <?php
+                                $dati = array("descrizione" => "", "indirizzo" => "", "data" => "");
+                                for ($i = 0; $i < count($righe2); $i++) {
+                                    for ($j = 0; $j < count($righe2[$i]); $j++) {
+                                        $dati["descrizione"] = $righe2[$i][1];
+                                        $dati["indirizzo"] = $righe2[$i][2];
+                                        $dati["stato"] = $righe2[$i][4];
+                                        $dati["idProblema"] = $righe2[$i][0];
+                                    }
+                                    $dati["data"] = date("D M y", strtotime($righe2[$i][3]));
+                                    ?>
+                                    <article class="postcard dark <?php echo $colors[rand(0, count($colors) - 1)]; ?>">
+                                        <a class="postcard__img_link" href="#"> 
+                                            <iframe class="postcard__img" src="https://maps.google.com/maps?q=<?php echo $dati["indirizzo"]; ?>&output=embed" alt="Image Title"></iframe>
+                                        </a>
+                                        <div class="postcard__text">
+                                            <h1 class="postcard__title blue"><?php echo $dati["indirizzo"]; ?></h1>
+                                            <div class="postcard__subtitle small">
+
+                                                <i class="fas fa-calendar-alt mr-2"><?php
+                                                    $date = explode("/", $dati["data"]);
+                                                    echo $date[0];
+                                                    ?></i>
+
+                                                <i class="fas fa-calendar-alt mr-2"><div class="form-check">
+                                                        <form id="autoform" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST">
+                                                            <input class="form-check-input" type="checkbox"  id="flexCheckIndeterminate" onchange="this.form.submit()" name="completato" value="<?php echo $dati2["idProblema"]; ?>">
+                                                            <label class="form-check-label" for="flexCheckIndeterminate">
+                                                                Lavoro completato
+                                                            </label>
+
+                                                        </form>
+                                                    </div>
+
+                                                </i>
+                                            </div>
+                                            <div class="postcard__bar"></div>
+                                            <div class="postcard__preview-txt"><?php echo $dati2["descrizione"]; ?></div>
+
+                                        </div>
+                                    </article>
+
+                                    <?php
+                                }
+                                ?>
+                            </div>
+                        </section>
+                        <?php
+                    } else {
+                        ?>
+                        <section class="dark" style="padding-bottom: 700px">
+                            <div class="container py-4">
+                                <h1 class="h1 text-center" id="pageHeaderTitle" style="color: white">BACHECA DELLE NEWS</h1>
+                                <div class="col-md-15 mb-4 pb-2">
+                                    <div class="container h-100">
+                                        <div class="d-flex justify-content-center h-100">
+                                            <form id="form" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST">
+                                                <div class="searchbar">
+                                                    <input class="search_input" type="text" name="ricerca" placeholder="Cerca...">
+                                                    <a onclick="document.getElementById('form').submit();" class="search_icon"><img style="height: 80px; width: 80px" src="foto/logo.png"/><i class="fas fa-search"></i></a>
+                                                </div> 
+                                            </form>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <h1 class="h1 text-center" id="pageHeaderTitle" style="color: white">Nessun lavoro da fare, complimenti!</h1>
+
+                            </div>
+                        </section>  
+
+                        <?php
+                    }
+                }
+            }
         }
 
         function controllaInput($input) {

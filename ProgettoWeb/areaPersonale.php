@@ -83,6 +83,12 @@ and open the template in the editor.
                         <input type="text" hidden="true" name="codiceFiscale" value="<?php echo $codiceFiscale; ?>">
                         <a onclick="document.getElementById('form').submit();">Presenta un reclamo </a>
                     </form>
+                </div>
+
+                <div class="text" style="display: flex; justify-content: center">
+                    <form id="form1" action="news.php" method="post">
+                        <a onclick="document.getElementById('form1').submit();">Bacheca delle news</a>
+                    </form>
                 </div> 
                 <?php
             }
