@@ -63,11 +63,15 @@ include_once 'DBconnection.php';
                             $dati["stato"] = $righe[$i][3];
                             ?>
                             <article class="postcard dark <?php echo $colors[rand(0, count($colors) - 1)]; ?>">
-                                <a class="postcard__img_link" href="#"> 
+                                <a class="postcard__img_link" href="https://it.wikipedia.org/wiki/<?php echo $dati["indirizzo"]; ?>"> 
                                     <iframe class="postcard__img" src="https://maps.google.com/maps?q=<?php echo $dati["indirizzo"]; ?>&output=embed" alt="Image Title"></iframe>
                                 </a>
                                 <div class="postcard__text">
-                                    <h1 class="postcard__title blue"><?php echo $dati["indirizzo"]; ?></h1>
+
+                                    <a <a href="https://it.wikipedia.org/wiki/<?php echo $dati["indirizzo"]; ?>">
+                                        <h1 class="postcard__title blue"><?php echo $dati["indirizzo"]; ?> </h1>
+                                    </a>
+
                                     <div class="postcard__subtitle small">
 
                                         <i class="fas fa-calendar-alt mr-2"><?php
@@ -139,7 +143,9 @@ include_once 'DBconnection.php';
                                         <iframe class="postcard__img" src="https://maps.google.com/maps?q=<?php echo $indirizzoRicevuto; ?>&output=embed" alt="Image Title"></iframe>
                                     </a>
                                     <div class="postcard__text">
-                                        <h1 class="postcard__title blue"><?php echo $indirizzoRicevuto; ?></h1>
+                                         <a <a href="https://it.wikipedia.org/wiki/<?php echo $indirizzoRicevuto ?>">
+                                        <h1 class="postcard__title blue"><?php echo $indirizzoRicevuto ?> </h1>
+                                    </a>
                                         <div class="postcard__subtitle small">
 
                                             <i class="fas fa-calendar-alt mr-2"><?php

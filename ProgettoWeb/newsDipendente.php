@@ -27,7 +27,8 @@ and open the template in the editor.
         $nome = "";
         $codiceFiscale = "";
         $cognome = "";
-        if ($_SERVER["REQUEST_METHOD"] && !isset($_POST["completato"])) {
+        $out = false;
+        if ($_SERVER["REQUEST_METHOD"] == "POST" && !isset($_POST["completato"]) && isset($_POST["codiceFiscale"])) {
 
             $preQuery = "SELECT * FROM persona WHERE nome='$nome' AND cognome='$cognome' AND codiceFiscale='$codiceFiscale'";
             $result = mysqli_query($connetti, $preQuery);
@@ -81,11 +82,13 @@ and open the template in the editor.
                             $dati["data"] = date("D M y", strtotime($righe[$i][3]));
                             ?>
                             <article class="postcard dark <?php echo $colors[rand(0, count($colors) - 1)]; ?>">
-                                <a class="postcard__img_link" href="#"> 
+                                <a class="postcard__img_link"> 
                                     <iframe class="postcard__img" src="https://maps.google.com/maps?q=<?php echo $dati["indirizzo"]; ?>&output=embed" alt="Image Title"></iframe>
                                 </a>
-                                <div class="postcard__text">
-                                    <h1 class="postcard__title blue"><?php echo $dati["indirizzo"]; ?></h1>
+                                <div class="postcard__text" >
+                                    <a <a href="https://it.wikipedia.org/wiki/<?php echo $dati["indirizzo"]; ?>">
+                                        <h1 class="postcard__title blue"><?php echo $dati["indirizzo"]; ?> </h1>
+                                    </a>
                                     <div class="postcard__subtitle small">
 
                                         <i class="fas fa-calendar-alt mr-2"><?php
@@ -117,10 +120,12 @@ and open the template in the editor.
                     </div>
                 </section>
                 <?php
+            } else {
+                $out = true;
             }
         }
 
-        if ($_SERVER["REQUEST_METHOD"] && isset($_POST["completato"])) {
+        if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["completato"])) {
 
             $queryUPDATE = "UPDATE problema SET stato='1' WHERE idProblema='$_POST[completato]'";
             $risultato = mysqli_query($connetti, $queryUPDATE);
@@ -168,7 +173,9 @@ and open the template in the editor.
                                             <iframe class="postcard__img" src="https://maps.google.com/maps?q=<?php echo $dati["indirizzo"]; ?>&output=embed" alt="Image Title"></iframe>
                                         </a>
                                         <div class="postcard__text">
-                                            <h1 class="postcard__title blue"><?php echo $dati["indirizzo"]; ?></h1>
+                                            <a <a href="https://it.wikipedia.org/wiki/<?php echo $dati["indirizzo"]; ?>">
+                                                <h1 class="postcard__title blue"><?php echo $dati["indirizzo"]; ?> </h1>
+                                            </a>
                                             <div class="postcard__subtitle small">
 
                                                 <i class="fas fa-calendar-alt mr-2"><?php
@@ -201,32 +208,140 @@ and open the template in the editor.
                         </section>
                         <?php
                     } else {
-                        ?>
-                        <section class="dark" style="padding-bottom: 700px">
-                            <div class="container py-4">
-                                <h1 class="h1 text-center" id="pageHeaderTitle" style="color: white">BACHECA DELLE NEWS</h1>
-                                <div class="col-md-15 mb-4 pb-2">
-                                    <div class="container h-100">
-                                        <div class="d-flex justify-content-center h-100">
-                                            <form id="form" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST">
-                                                <div class="searchbar">
-                                                    <input class="search_input" type="text" name="ricerca" placeholder="Cerca...">
-                                                    <a onclick="document.getElementById('form').submit();" class="search_icon"><img style="height: 80px; width: 80px" src="foto/logo.png"/><i class="fas fa-search"></i></a>
-                                                </div> 
-                                            </form>
+                        $queryGetReclami = "SELECT idProblema,descrizioneProblema,indirizzoProblema,dataReclamo,stato from problema WHERE stato='1'";
+                        $risultato = mysqli_query($connetti, $queryGetReclami);
+                        $dati = array("descrizione" => "", "indirizzo" => "", "data" => "", "stato" => "", "idProblema" => "");
+                        if (mysqli_num_rows($risultato) != 0) {
+                            $righe = mysqli_fetch_all($risultato);
+                            ?>
 
+                            <section class="dark" style="padding-bottom: 600px">
+                                <div class="container py-4">
+                                    <h1 class="h1 text-center" id="pageHeaderTitle" style="color: white">BACHECA DELLE NEWS: LAVORI COMPLETATI</h1>
+                                    <div class="col-md-15 mb-4 pb-2">
+                                        <div class="container h-100">
+                                            <div class="d-flex justify-content-center h-100">
+                                                <form id="form" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST">
+                                                    <div class="searchbar">
+                                                        <input class="search_input" type="text" name="ricerca" placeholder="Cerca...">
+                                                        <a onclick="document.getElementById('form').submit();" class="search_icon"><img style="height: 80px; width: 80px" src="foto/logo.png"/><i class="fas fa-search"></i></a>
+                                                    </div> 
+                                                </form>
+
+                                            </div>
                                         </div>
                                     </div>
+
+                                    <?php
+                                    $dati = array("descrizione" => "", "indirizzo" => "", "data" => "");
+                                    for ($i = 0; $i < count($righe); $i++) {
+                                        for ($j = 0; $j < count($righe[$i]); $j++) {
+                                            $dati["descrizione"] = $righe[$i][1];
+                                            $dati["indirizzo"] = $righe[$i][2];
+                                            $dati["stato"] = $righe[$i][4];
+                                            $dati["idProblema"] = $righe[$i][0];
+                                        }
+                                        $dati["data"] = date("D M y", strtotime($righe[$i][3]));
+                                        ?>
+                                        <article class="postcard dark <?php echo $colors[rand(0, count($colors) - 1)]; ?>">
+                                            <a class="postcard__img_link"> 
+                                                <iframe class="postcard__img" src="https://maps.google.com/maps?q=<?php echo $dati["indirizzo"]; ?>&output=embed" alt="Image Title"></iframe>
+                                            </a>
+                                            <div class="postcard__text" >
+                                                <a <a href="https://it.wikipedia.org/wiki/<?php echo $dati["indirizzo"]; ?>">
+                                                    <h1 class="postcard__title blue"><?php echo $dati["indirizzo"]; ?> </h1>
+                                                </a>
+                                                <div class="postcard__subtitle small">
+
+                                                    <i class="fas fa-calendar-alt mr-2"><?php
+                                                        $date = explode("/", $dati["data"]);
+                                                        echo $date[0];
+                                                        ?></i>
+                                                </div>
+                                                <div class="postcard__bar"></div>
+                                                <div class="postcard__preview-txt"><?php echo $dati["descrizione"]; ?></div>
+
+                                            </div>
+                                        </article>
+
+                                        <?php
+                                    }
+                                    ?>
                                 </div>
-
-                                <h1 class="h1 text-center" id="pageHeaderTitle" style="color: white">Nessun lavoro da fare, complimenti!</h1>
-
-                            </div>
-                        </section>  
-
-                        <?php
+                            </section>
+                            <?php
+                        }
                     }
                 }
+            }
+        }
+
+        if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["ricerca"])) {
+            $indirizzoRicevuto = controllaInput($_POST["ricerca"]);
+            $query3 = "SELECT descrizioneProblema,indirizzoProblema,dataReclamo FROM problema WHERE indirizzoProblema='$indirizzoRicevuto'";
+            $risultato3 = mysqli_query($connetti, $query3);
+
+
+            if (mysqli_num_rows($risultato3) != 0) {
+                $righe2 = mysqli_fetch_all($risultato3);
+                ?>
+
+                <section class="dark" style="padding-bottom: 700px">
+                    <div class="container py-4">
+                        <h1 class="h1 text-center" id="pageHeaderTitle" style="color: white">BACHECA DELLE NEWS</h1>
+                        <div class="col-md-15 mb-4 pb-2">
+                            <div class="container h-100">
+                                <div class="d-flex justify-content-center h-100">
+                                    <form id="form" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST">
+                                        <div class="searchbar">
+                                            <input class="search_input" type="text" name="ricerca" placeholder="Cerca...">
+                                            <a onclick="document.getElementById('form').submit();" class="search_icon"><img style="height: 80px; width: 80px" src="foto/logo.png"/><i class="fas fa-search"></i></a>
+                                        </div> 
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <?php
+                        $dati2 = array("descrizione" => "", "indirizzo" => "", "data" => "");
+                        for ($i = 0; $i < count($righe2); $i++) {
+                            for ($j = 0; $j < count($righe2[$i]); $j++) {
+                                $dati2["descrizione"] = $righe2[$i][0];
+                                $dati2["indirizzo"] = $righe2[$i][1];
+                            }
+                            $dati2["data"] = date("D M y", strtotime($righe2[$i][2]));
+                            ?>
+                            <article class="postcard dark <?php echo $colors[rand(0, count($colors) - 1)]; ?>">
+                                <a class="postcard__img_link" href="#"> 
+                                    <iframe class="postcard__img" src="https://maps.google.com/maps?q=<?php echo $indirizzoRicevuto; ?>&output=embed" alt="Image Title"></iframe>
+                                </a>
+                                <div class="postcard__text">
+                                    <a <a href="https://it.wikipedia.org/wiki/<?php echo $indirizzoRicevuto ?>">
+                                        <h1 class="postcard__title blue"><?php echo $indirizzoRicevuto ?> </h1>
+                                    </a>
+                                    <div class="postcard__subtitle small">
+
+                                        <i class="fas fa-calendar-alt mr-2"><?php
+                                            $date2 = explode("/", $dati2["data"]);
+                                            echo $date2[0];
+                                            ?></i>
+
+                                    </div>
+                                    <div class="postcard__bar"></div>
+                                    <div class="postcard__preview-txt"><?php echo $dati2["descrizione"]; ?></div>
+
+                                </div>
+                            </article>
+                            <?php
+                        }
+                        ?>
+
+
+                    </div>
+                </section>
+
+                <?php
             }
         }
 

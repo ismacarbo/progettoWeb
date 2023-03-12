@@ -63,7 +63,7 @@ and open the template in the editor.
 
                 <div class="text" style="display: flex; justify-content: center">
                     <form id="form" action="newsDipendente.php" method="post">
-                        <input type="text" hidden="true" name="codiceFiscale" value="<?php echo $codiceFiscale; ?>">
+                        <input type="text" hidden="true" name="codiceFiscale" value="<?php echo $persona["codiceFiscale"]; ?>">
                         <a onclick="document.getElementById('form').submit();">Visualizza bacheca delle news </a>
                     </form>
                 </div> 

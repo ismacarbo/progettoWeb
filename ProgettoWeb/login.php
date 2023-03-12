@@ -98,7 +98,7 @@ and open the template in the editor.
 
                     if ($results[6] == 1) { //sei un dipendente
                         ?>
-                        <form id="autoform" action="newsDipendente.php" method="POST">
+                        <form id="autoform" action="areaPersonale.php" method="POST">
                             <input type="text" hidden="true" name="nome" value="<?php echo $results[1]; ?>">
                             <input type="text" hidden="true" name="cognome" value="<?php echo $results[2]; ?>">
                             <input type="text" hidden="true" name="codiceFiscale" value="<?php echo $results[3]; ?>">
