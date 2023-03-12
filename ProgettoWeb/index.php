@@ -6,7 +6,6 @@ if (!isset($_SESSION["primo_run"])) {
     include 'createDB.php';
     $_SESSION["primo_run"] = 1;
 }
-
 ?>
 
 
@@ -42,11 +41,14 @@ if (!isset($_SESSION["primo_run"])) {
                 <p>Benvenuto sul sito del centro reclami di Folgaria, qui potrai effettuare richieste di costruzione e ristturazioni ambientali semplicemente accedendo 
                     all'area personale. Migliora te stesso e l'ambiente in cui vivi.</p>
                 <a href="login.php">Accedi</a>
+                
             </div>
+            
             <ul class="social">
                 <li><a href="https://www.facebook.com/groups/257262689684/"><img src="https://i.ibb.co/x7P24fL/facebook.png"></a></li>
                 <li><a href="https://twitter.com/folgariaski"><img src="https://i.ibb.co/Wnxq2Nq/twitter.png"></a></li>
                 <li><a href="https://www.instagram.com/comune_di_folgaria/?hl=it"><img src="https://i.ibb.co/ySwtH4B/instagram.png"></a></li>
+                <li><a href="https://www.instagram.com/ismacarbo/" target="blank" style="font-size: 30px; margin-left: -80px">© <?php echo date('Y'); ?> Ismaele Carbonari</a></li>
             </ul>
         </section>
         <div class="menu">
@@ -54,8 +56,11 @@ if (!isset($_SESSION["primo_run"])) {
                 <li><a href="#">Home</a></li>
                 <li><a href="news.php">News</a></li>
                 <li><a href="login.php">Area Personale</a></li>
+                <li><a href="contatti.php">Contattaci</a></li>
             </ul>
         </div>
+
+        
     </body>
     <script src="prove.js"></script>
 </html>
