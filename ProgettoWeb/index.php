@@ -6,6 +6,7 @@ if (!isset($_SESSION["primo_run"])) {
     include 'createDB.php';
     $_SESSION["primo_run"] = 1;
 }
+
 ?>
 
 

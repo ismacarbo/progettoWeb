@@ -57,7 +57,7 @@ and open the template in the editor.
                     <img class="card-img-top" src="foto/img_avatar1.png" alt="Card image" style="width:100%">
                     <div class="card-body">
                         <h4 class="card-title"><?php echo $nome . "  " . $cognome; ?></h4>
-                        <p class="card-text">Bentornato ad uno dei nostri migliori dipendenti! Clicca qui sono per vedere il lavoro di oggi ↓</p>
+                        <p class="card-text">Bentornato ad uno dei nostri migliori dipendenti</p>
                     </div>
                 </div>
 
@@ -66,8 +66,14 @@ and open the template in the editor.
                         <input type="text" hidden="true" name="codiceFiscale" value="<?php echo $persona["codiceFiscale"]; ?>">
                         <a onclick="document.getElementById('form').submit();">Visualizza bacheca delle news </a>
                     </form>
-                </div> 
-                <?php
+                </div>
+        
+                <div class="text" style="display: flex; justify-content: center">
+                    <form id="form1" action="clientela.php" method="post">
+                        <a onclick="document.getElementById('form1').submit();">Visualizza dati sui clienti</a>
+                    </form>
+                </div>
+                <?php 
             } else {
                 ?>
                 <div class="card mx-auto shadow-lg p-3 mb-5 bg-white rounded" style="width:400px; margin-top: 100px">
