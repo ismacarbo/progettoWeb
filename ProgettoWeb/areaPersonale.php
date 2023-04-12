@@ -24,12 +24,12 @@ and open the template in the editor.
 
 
         <?php
-        $persona = array("nome" => "", "cognome" => "", "codiceFiscale" => "", "numeroTelefono" => "", "indirizzo" => "", "dataNascita" => "", "email" => "", "password" => "", "tipo" => "");
+        $persona = array("nome" => "", "cognome" => "", "codiceFiscale" => "", "numeroTelefono" => "", "indirizzo" => "", "dataNascita" => "", "email" => "", "password" => "", "tipo" => "","id"=>"");
 
         $nome = "";
         $codiceFiscale = "";
         $cognome = "";
-        if ($_SERVER["REQUEST_METHOD"] && isset($_POST["nome"]) || isset($_POST["cognome"]) || isset($_POST["codiceFiscale"])) {
+        if ($_SERVER["REQUEST_METHOD"]=="POST" && isset($_POST["nome"]) || isset($_POST["cognome"]) || isset($_POST["codiceFiscale"])) {
             $nome = controllaInput($_POST["nome"]);
             $cognome = controllaInput($_POST["cognome"]);
             $codiceFiscale = controllaInput($_POST["codiceFiscale"]);
@@ -49,17 +49,29 @@ and open the template in the editor.
                 $persona["dataNascita"] = $results[7];
                 $persona["email"] = $results[8];
                 $persona["password"] = $results[9];
+                $persona["id"]=$results[0];
+                
             }
-
-            if ($results[6] == "1") {
+            
+            if ($persona["tipo"] == "1") {
+                $result=null;
+                $queryRec="SELECT avg(p.recensione) as media from persona as p where p.recensione!=0";
+                $runQuery= mysqli_query($connetti, $queryRec);
+                if($runQuery){
+                    $result= mysqli_fetch_assoc($runQuery);
+                    
+                }
+                
                 ?>
                 <div class="card mx-auto shadow-lg p-3 mb-5 bg-white rounded" style="width:400px; margin-top: 100px">
                     <img class="card-img-top" src="foto/img_avatar1.png" alt="Card image" style="width:100%">
                     <div class="card-body">
                         <h4 class="card-title"><?php echo $nome . "  " . $cognome; ?></h4>
-                        <p class="card-text">Bentornato ad uno dei nostri migliori dipendenti</p>
+                        <p class="card-text">Bentornato ad uno dei nostri migliori dipendenti <br> Media recensioni clienti attuale: <?php echo round($result["media"],2); ?> stelle</p>
                     </div>
                 </div>
+                
+                
 
                 <div class="text" style="display: flex; justify-content: center">
                     <form id="form" action="newsDipendente.php" method="post">
@@ -67,13 +79,13 @@ and open the template in the editor.
                         <a onclick="document.getElementById('form').submit();">Visualizza bacheca delle news </a>
                     </form>
                 </div>
-        
+
                 <div class="text" style="display: flex; justify-content: center">
                     <form id="form1" action="clientela.php" method="post">
                         <a onclick="document.getElementById('form1').submit();">Visualizza dati sui clienti</a>
                     </form>
                 </div>
-                <?php 
+                <?php
             } else {
                 ?>
                 <div class="card mx-auto shadow-lg p-3 mb-5 bg-white rounded" style="width:400px; margin-top: 100px">
@@ -96,23 +108,21 @@ and open the template in the editor.
                         <a onclick="document.getElementById('form1').submit();">Bacheca delle news</a>
                     </form>
                 </div> 
+
+                <div class="text" style="display: flex; justify-content: center">
+                    <form id="form2" action="ChatBot.php" method="post">
+                        <a onclick="document.getElementById('form2').submit();">Fatti aiutare dal nostro mitico chatbot!</a>
+                    </form>
+                </div>
+                <div class="text" style="display: flex; justify-content: center">
+                    <form id="form3" action="recensione.php" method="post">
+                        <input type="text" hidden="true" name="id" value="<?php echo $persona["id"]; ?>">
+                        <a onclick="document.getElementById('form3').submit();">Lascia una recensione!</a>
+                    </form>
+                </div>
                 <?php
             }
 
-            $preQuery = "SELECT * FROM persona WHERE nome='$nome' AND cognome='$cognome' AND codiceFiscale='$codiceFiscale'";
-            $result = mysqli_query($connetti, $preQuery);
-
-            if (mysqli_num_rows($result) != 0) {
-                $results = mysqli_fetch_row($result);
-                $persona["nome"] = $results[1];
-                $persona["cognome"] = $results[2];
-                $persona["codiceFiscale"] = $results[3];
-                $persona["numeroTelefono"] = $results[4];
-                $persona["indirizzo"] = $results[5];
-                $persona["dataNascita"] = $results[7];
-                $persona["email"] = $results[8];
-                $persona["password"] = $results[9];
-            }
         }
 
         function controllaInput($input) {

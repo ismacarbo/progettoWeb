@@ -100,7 +100,7 @@ and open the template in the editor.
                                             <div class="col-md-6 mb-4 pb-2">
 
                                                 <div class="form-outline">
-                                                    <input type="password" name="password" id="password" class="form-control form-control-lg"required="" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,12}$" title="Inserisci correttamente la password" />
+                                                    <input type="password" name="password" id="password" class="form-control form-control-lg"required=""/>
                                                     <label class="form-label" for="password">Password</label>
                                                 </div>
                                             </div>

@@ -1,24 +1,9 @@
-const menuToggle = document.querySelector('.toggle');
-const showcase = document.querySelector('.showcase');
+const chat_btn = $("#chat-bot .icon");
+const chat_box = $("#chat-bot .messenger");
 
-menuToggle.addEventListener('click', () => {
-    menuToggle.classList.toggle('active');
-    showcase.classList.toggle('active');
+chat_btn.click(() => {
+  chat_btn.toggleClass("expanded");
+  setTimeout(() => {
+    chat_box.toggleClass("expanded");
+  }, 100);
 });
-
-
-(function () {
-'use strict'
-const forms = document.querySelectorAll('.requires-validation')
-Array.from(forms)
-  .forEach(function (form) {
-    form.addEventListener('submit', function (event) {
-      if (!form.checkValidity()) {
-        event.preventDefault()
-        event.stopPropagation()
-      }
-
-      form.classList.add('was-validated')
-    }, false)
-  })
-})()

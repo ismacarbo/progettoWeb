@@ -48,10 +48,10 @@ and open the template in the editor.
                                         </div>
 
                                         <div class="form-outline form-white mb-4">
-                                            <input class="form-control form-control-lg" name="password" type="password" required="" title="Inserisci correttamente la password">
+                                            <input class="form-control form-control-lg" name="password" type="password" required="" >
                                             <label class="form-label" for="typePasswordX">Password</label>
                                         </div>
-                                        <input  class="btn btn-outline-light btn-lg px-5" type="submit" value="INVIA">
+                                        <input  class="btn btn-outline-light btn-lg px-5" type="submit" name="invia" value="INVIA">
 
                                         <div hidden="true" id="nonLoggato" style="margin-bottom: -80px">
                                             <br>
