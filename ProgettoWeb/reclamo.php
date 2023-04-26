@@ -24,6 +24,24 @@ and open the template in the editor.
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="pr.css">
+        <button class="btn1" onclick="history.back()"></i>Indietro</button>
+        <style>
+            .btn1 {
+                
+                margin-left: 30px;
+                margin-top: 30px;
+                background-color: #01146d;
+                border: none;
+                color: white;
+                padding: 12px 16px;
+                font-size: 16px;
+                cursor: pointer;
+            }
+
+            .btn:hover {
+                background-color: RoyalBlue;
+            }
+        </style>
 
         <?php
         $persona = array("nome" => "", "cognome" => "", "codiceFiscale" => "", "numeroTelefono" => "", "indirizzo" => "", "dataNascita" => "", "email" => "", "password" => "");

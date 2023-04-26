@@ -29,6 +29,7 @@ and open the template in the editor.
 
         <link rel="stylesheet" href="styleLogin.css">
 
+
         <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST">
             <section class="vh-100 gradient-custom">
                 <div class="container py-5 h-100">

@@ -18,6 +18,24 @@ include_once 'DBconnection.php';
     </head>
 
     <body>
+        <button class="btn" onclick="history.back()"></i>Indietro</button>
+        <style>
+            .btn {
+                
+                margin-left: 30px;
+                margin-top: 30px;
+                background-color: #01146d;
+                border: none;
+                color: white;
+                padding: 12px 16px;
+                font-size: 16px;
+                cursor: pointer;
+            }
+
+            .btn:hover {
+                background-color: RoyalBlue;
+            }
+        </style>
 
 
         <?php

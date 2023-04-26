@@ -6,7 +6,6 @@ if (!isset($_SESSION["primo_run"])) {
     include 'createDB.php';
     $_SESSION["primo_run"] = 1;
     
-    print_r($_SESSION);
 }
 unset($_SESSION["primo_run"]);
 
@@ -66,5 +65,5 @@ unset($_SESSION["primo_run"]);
 
         
     </body>
-    <script src="prove.js"></script>
+    <script src="prove2.js"></script>
 </html>

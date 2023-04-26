@@ -10,13 +10,35 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 <html>
+    
     <head>
         <meta charset="UTF-8">
         <title></title>
         <link rel="stylesheet" href="recensione.css">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     </head>
+    
     <body>
+        
+        <button class="btn1" onclick="history.back()"></i>Indietro</button>
+        <style>
+            .btn1 {
+                
+                margin-left: 30px;
+                margin-top: 30px;
+                background-color: #01146d;
+                border: none;
+                color: white;
+                padding: 12px 16px;
+                font-size: 16px;
+                cursor: pointer;
+            }
+
+            .btn1:hover {
+                background-color: RoyalBlue;
+            }
+        </style>
+       
 
         <?php
         $id = "";
@@ -112,7 +134,7 @@ and open the template in the editor.
         }
         ?>
 
-
-
+ 
+                
     </body>
 </html>

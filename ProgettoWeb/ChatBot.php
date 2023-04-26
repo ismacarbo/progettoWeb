@@ -5,6 +5,24 @@
     <link rel="stylesheet" href="bot.css">
 </head>
 <body>
+    <button class="btn1" onclick="history.back()"><i class="fa fa-home"></i>Indietro</button>
+        <style>
+            .btn1 {
+                
+                margin-left: 30px;
+                margin-top: 30px;
+                background-color: #01146d;
+                border: none;
+                color: white;
+                padding: 12px 16px;
+                font-size: 16px;
+                cursor: pointer;
+            }
+
+            .btn1:hover {
+                background-color: RoyalBlue;
+            }
+        </style>
     <div id="container">
         
         <div id="display">

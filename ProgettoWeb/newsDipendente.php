@@ -21,6 +21,26 @@ and open the template in the editor.
         <link rel="stylesheet" href="news.css">
     </head>
     <body>
+        <button class="btn1" onclick="history.back()"></i>Indietro</button>
+        <style>
+            .btn1 {
+                
+                margin-left: 30px;
+                margin-top: 30px;
+                background-color: #01146d;
+                border: none;
+                color: white;
+                padding: 12px 16px;
+                font-size: 16px;
+                cursor: pointer;
+            }
+
+            .btn1:hover {
+                background-color: RoyalBlue;
+            }
+        </style>
+        
+        
         <?php
         $colors = array("blue", "red", "green", "yellow");
         $persona = array("nome" => "", "cognome" => "", "codiceFiscale" => "", "numeroTelefono" => "", "indirizzo" => "", "dataNascita" => "", "email" => "", "password" => "");
